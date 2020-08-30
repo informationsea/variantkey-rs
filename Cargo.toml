@@ -1,0 +1,23 @@
+[package]
+name = "variantkey"
+version = "0.1.0"
+authors = ["OKAMURA, Yasunobu <okamura@informationsea.info>"]
+edition = "2018"
+readme = "README.md"
+
+description = "Pure rust implementation of variantkey"
+repository = "https://github.com/informationsea/variantkey-rs"
+homepage = "https://github.com/informationsea/variantkey-rs"
+
+keywords = ["bioinformatics"]
+categories = ["science"]
+license = "Apache-2.0"
+
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+atoi = "^0.3.2"
+
+[dev-dependencies]
+flate2 = "1"

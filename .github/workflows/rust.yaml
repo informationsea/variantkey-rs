@@ -1,0 +1,52 @@
+name: "Build & Test"
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  win-mac-build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cache dependencies
+      uses: actions/cache@v2
+      env:
+        cache-name: cache-cargo
+      with:
+        path: ~/.cargo/registry
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/*.crate') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+    - name: Checkout submodules
+      run: git submodule update --init --recursive
+    - name: Cache target
+      uses: actions/cache@v2
+      env:
+        cache-name: cache-target
+      with:
+        path: target
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/*.crate') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+    - name: Build
+      run: cargo build
+      env:
+        PATH: ${{ format('C:\Program Files\LLVM\bin;{0}', env.PATH) }}
+    - name: Run tests
+      run: cargo test --verbose
+      env:
+        PATH: ${{ format('C:\Program Files\LLVM\bin;{0}', env.PATH) }}
+
