@@ -1,5 +1,7 @@
 # variantkey-rs
 
+![Build & Test](https://github.com/informationsea/variantkey-rs/workflows/Build%20&%20Test/badge.svg)
+
 Pure rust implementation of [variantkey](https://github.com/Genomicsplc/variantkey)
 
 ## Example
